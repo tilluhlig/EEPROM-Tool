@@ -381,13 +381,18 @@ namespace eeporm_tool
                                "A Blöcke pro Seite",
                                "B Blöcke pro Seite",
                                "C Blöcke pro Seite",                              
-                               "D Blöcke pro Seite",                              
+                               "D Blöcke pro Seite",  
+                                "A Fehlerhaft",
+                               "B Fehlerhaft",
+                               "C Fehlerhaft",                              
+                               "D Fehlerhaft",
                                "Zeitintervall"
                              };
             String[] Intervalle = { "1s", "5s","10s","30s","60s","150s","5m","10m","15m","30m","60m","90m","2h","6h","12h","24h"};
             try
             {
-                port.ReadExisting();
+
+              //  port.ReadExisting();
                 int breite = 100;
                 listBox1.Items.Add(Texte[0] + ": " + Convert.ToString(port.ReadByte()));
                 listBox1.Items.Add(Texte[1] + ": " + Convert.ToString(ReadDrei()));
@@ -428,11 +433,20 @@ namespace eeporm_tool
                 listBox1.Items.Add(Texte[24] + ": " + Convert.ToString(port.ReadByte()));
                 listBox1.Items.Add(Texte[25] + ": " + Convert.ToString(port.ReadByte()));
                 listBox1.Items.Add(("").PadLeft(breite, '-'));
+
+                listBox1.Items.Add(Texte[26] + ": " + (port.ReadByte()==1 ? "Ja" : "Nein"));
+                listBox1.Items.Add(Texte[27] + ": " + (port.ReadByte() == 1 ? "Ja" : "Nein"));
+                listBox1.Items.Add(Texte[28] + ": " + (port.ReadByte() == 1 ? "Ja" : "Nein"));
+                listBox1.Items.Add(Texte[29] + ": " + (port.ReadByte() == 1 ? "Ja" : "Nein"));
+                listBox1.Items.Add(("").PadLeft(breite, '-'));
+
                 int a = port.ReadByte();
+                Log.Add(a.ToString());
                 String Text = "unbekannt";
                 if (a>0)
                     Text =  Intervalle[a-1];
-                listBox1.Items.Add(Texte[26] + ": " + Text);
+                listBox1.Items.Add(Texte[30] + ": " + Text);
+                Log_speichern("Kenndaten");
             }
             catch (Exception) { listBox1.Items.Add("Fehler..."); listBox1.Refresh(); }
 
